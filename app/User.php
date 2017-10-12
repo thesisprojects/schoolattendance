@@ -35,6 +35,11 @@ class User extends Authenticatable
         $this->connection = $connection;
     }
 
+    public function subjects()
+    {
+        return $this->hasMany('App\Subject', 'assigned_teacher');
+    }
+
     public function roles()
     {
         return $this->belongsToMany('App\Role', 'user_roles', 'user_id', 'role_id');

@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function getEdit($id)
     {
-        $user = User::find($id)->with('roles')->first();
+        $user = User::where('id', $id)->with('roles')->first();
         if ($user->roles->count()) {
             $roles = Role::where('id', '!=', $user->roles->first()->id)->get();
         } else {
@@ -46,7 +46,7 @@ class UserController extends Controller
                 'role' => 'required',
             ]);
             $data = $request->all();
-            $user = User::find($data['id'])->with('roles')->first();
+            $user = User::where('id', $data['id'])->with('roles')->first();
             $oldRole = $user->roles->count() ? $user->roles->first()->id : null;
             $user->first_name = $data['first_name'];
             $user->last_name = $data['last_name'];

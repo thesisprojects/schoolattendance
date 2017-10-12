@@ -21,7 +21,7 @@ class StudentController extends Controller
 
     public function getEdit($id)
     {
-        $student = Student::find($id)->first();
+        $student = Student::find($id);
         $courses = Course::where('id', '!=', $student->course_id)->get();
         return view("pages.students.edit")->with([
             'student' => $student,
@@ -41,7 +41,7 @@ class StudentController extends Controller
                 'start_year' => 'required',
             ]);
             $data = $request->all();
-            $student = Student::find($data['id'])->first();
+            $student = Student::find($data['id']);
             $student->fill($data);
             $student->save();
             return back()->with('status', 'User updated.');

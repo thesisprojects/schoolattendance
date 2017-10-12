@@ -37,14 +37,14 @@
                 <div class="col s12 m6 l6">
                     <label for="slug-input">Schedule</label>
                     <select name="schedule" class="browser-default">
-                        <option value="Monday">Monday</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="Thursday">Thursday</option>
-                        <option value="Friday">Friday</option>
-                        <option value="MW">MW</option>
-                        <option value="MWF">MWF</option>
-                        <option value="TTH">TTH</option>
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="1,3">MW</option>
+                        <option value="1,3,5">MWF</option>
+                        <option value="2,4">TTH</option>
                     </select>
                 </div>
             </div>
@@ -107,9 +107,13 @@
                         <td>{{ ucfirst($subject->name) }}</td>
                         <td>{{ ucfirst($subject->teacher->last_name . ", " . $subject->teacher->first_name) }}</td>
                         <td>{{ ucfirst($subject->description) }}</td>
-                        <td>{{ strtoupper($subject->schedule) }}</td>
-                        <td>{{ strtoupper($subject->time_start) }}</td>
-                        <td>{{ strtoupper($subject->time_end) }}</td>
+                        <td>
+                            @foreach(\App\Classes\DateHelper::getDay($subject->schedule) as $date)
+                                {{ $date }},
+                            @endforeach
+                        </td>
+                        <td>{{ date("g:i a", strtotime($subject->time_start)) }}</td>
+                        <td>{{ date("g:i a", strtotime($subject->time_end)) }}</td>
                         <td>
                             <button onclick="window.location.assign('{{ route('getEditSubject', ['id' => $subject->id]) }}')"
                                     class="btn btn-success text-white">Edit

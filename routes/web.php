@@ -63,6 +63,10 @@ Route::group(['prefix' => '/'], function () {
             Route::name('postCreateSubject')->post('create', 'SubjectController@postCreate')->middleware('permissions:create courses');
         });
 
+        Route::group(['prefix' => 'attendancesystem/', 'middleware' => ['permissions:use attendance', 'mustBeATeacher']], function () {
+            Route::name('getAttendanceSystem')->get('', 'AttendanceSystemController@index');
+        });
+
 
     });
 

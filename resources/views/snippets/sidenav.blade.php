@@ -41,6 +41,11 @@
             <a href="{{ Route('getSubjects') }}"><i class="material-icons">book</i>Subjects</a>
         </li>
     @endif
+    @if(Auth::user()->hasPermission('use attendance'))
+        <li>
+            <a href="{{ Route('getAttendanceSystem') }}"><i class="material-icons">playlist_add_check</i>Attendance System</a>
+        </li>
+    @endif
     <li>
         <div class="divider"></div>
     </li>

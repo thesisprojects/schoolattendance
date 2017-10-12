@@ -18,7 +18,7 @@ class CourseController extends Controller
 
     public function getEdit($id)
     {
-        $course = Course::find($id)->first();
+        $course = Course::find($id);
 
         return view("pages.courses.edit")->with([
             'course' => $course
@@ -34,7 +34,7 @@ class CourseController extends Controller
                 'description' => 'required|min:2|max:45',
             ]);
             $data = $request->all();
-            $course = Course::find($data['id'])->first();
+            $course = Course::find($data['id']);
             $course->fill($data);
             $course->save();
             return back()->with('status', 'Course updated.');

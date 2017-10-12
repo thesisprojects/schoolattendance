@@ -21,8 +21,7 @@ class subjectController extends Controller
 
     public function getEdit($id)
     {
-        $subject = Subject::find($id)->first();
-
+        $subject = Subject::find($id);
         return view("pages.subjects.edit")->with([
             'subject' => $subject
         ]);
@@ -33,17 +32,17 @@ class subjectController extends Controller
         try {
             $this->validate($request, [
                 'name' => 'required|min:2|max:45',
-                'schedule' => 'required|min:2|max:45',
+                'schedule' => 'required',
                 'time_start' => 'required|min:2|max:45',
                 'time_end' => 'required|min:2|max:45',
                 'description' => 'required|min:2|max:45',
             ]);
             $data = $request->all();
-            $subject = Subject::find($data['id'])->first();
+            $subject = Subject::find($data['id']);
             $subject->fill($data);
             $subject->save();
             return back()->with('status', 'Subject updated.');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return response()->json([
                 'message' => 'Something fatal went up',
                 'error' => $exception->getMessage()
@@ -56,7 +55,7 @@ class subjectController extends Controller
         try {
             $this->validate($request, [
                 'name' => 'required|min:2|max:45',
-                'schedule' => 'required|min:2|max:45',
+                'schedule' => 'required',
                 'time_start' => 'required|min:2|max:45',
                 'time_end' => 'required|min:2|max:45',
                 'description' => 'required|min:2|max:45',
@@ -66,7 +65,7 @@ class subjectController extends Controller
             $subject->id = Uuid::uuid1();
             $subject->save();
             return back()->with('status', 'Subject created.');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return response()->json([
                 'message' => 'Something fatal went up',
                 'error' => $exception->getMessage()

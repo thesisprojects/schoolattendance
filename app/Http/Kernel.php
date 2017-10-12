@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\CheckFeature;
+use App\Http\Middleware\TeacherMiddleWare;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -59,6 +60,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'roles' => \App\Http\Middleware\CheckRole::class,
         'permissions' => \App\Http\Middleware\CheckPermission::class,
-        'nullable' => \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class
+        'nullable' => \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        'mustBeATeacher' => TeacherMiddleWare::class
     ];
 }
