@@ -40,7 +40,7 @@
                         <div class="col s12 m6 l6 input-field">
                             <label for="emergency-input">Emergency number</label>
                             <input type="text" class="form-control" id="emergency-input" value="{{ $student->parent_contact_number }}" name="parent_contact_number"
-                                   minlength="11" maxlength="11" required>
+                                   minlength="13" maxlength="13" required>
                         </div>
                         <div class="col s12 m6 l6">
                             <label>Course</label>

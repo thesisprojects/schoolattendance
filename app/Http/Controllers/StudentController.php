@@ -37,7 +37,7 @@ class StudentController extends Controller
                 'first_name' => 'required|min:2|max:40',
                 'last_name' => 'required|min:2|max:40',
                 'course_id' => 'required|min:2|max:40',
-                'parent_contact_number' => 'required|min:11|max:11',
+                'parent_contact_number' => 'required|min:13|max:13',
                 'start_year' => 'required',
             ]);
             $data = $request->all();
@@ -61,7 +61,7 @@ class StudentController extends Controller
                 'first_name' => 'required|min:2|max:40',
                 'last_name' => 'required|min:2|max:40',
                 'course_id' => 'required|min:2|max:40',
-                'parent_contact_number' => 'required|min:11|max:11',
+                'parent_contact_number' => 'required|min:13|max:13',
                 'start_year' => 'required',
             ]);
             $data = $request->all();
