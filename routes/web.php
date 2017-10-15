@@ -65,6 +65,8 @@ Route::group(['prefix' => '/'], function () {
 
         Route::group(['prefix' => 'attendancesystem/', 'middleware' => ['permissions:use attendance', 'mustBeATeacher']], function () {
             Route::name('getAttendanceSystem')->get('', 'AttendanceSystemController@index');
+            Route::name('postAttendance')->post('attendance', 'AttendanceSystemController@postAttendance');
+            Route::name('postNotify')->post('notify', 'AttendanceSystemController@notifyParent');
         });
 
 
