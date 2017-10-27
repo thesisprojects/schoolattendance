@@ -20,6 +20,7 @@ class CreateStudentsTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('course_id');
+            $table->boolean('is_excempted')->default(0);
             $table->string('parent_contact_number');
             $table->date('start_year');
             $table->timestamps();

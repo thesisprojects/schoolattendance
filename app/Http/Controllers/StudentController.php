@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Attendance;
 use App\Course;
 use App\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Ramsey\Uuid\Uuid;
 
 class StudentController extends Controller
@@ -76,4 +79,39 @@ class StudentController extends Controller
             ], 500);
         }
     }
+
+    public function getAbsents($from, $to)
+    {
+        $dateRange = [Carbon::parse($from)->startOfDay(), Carbon::parse($to)->endOfDay()];
+        $absents = Attendance::with('student', 'subject')->whereBetween('created_at', $dateRange)->where('type', 'absent')->get();
+        return view("pages.students.absents.index")->with([
+            'absents' => $absents,
+            'dateRange' => $dateRange
+        ]);
+    }
+
+    public function postLoadAbsentData(Request $request)
+    {
+        $data = $request->all();
+        return redirect(Route('getAbsents', ['from' => $data['from'], 'to' => $data['to']]));
+    }
+
+    public function search($keyword)
+    {
+        $students = Student::where(function ($query) use ($keyword) {
+            $query->where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%');
+        })->paginate(10);
+        $courses = Course::all();
+        return view("pages.students.view")->with([
+            'students' => $students,
+            'courses' => $courses
+        ]);
+    }
+
+    public function loadSearch(Request $request)
+    {
+        $data = $request->all();
+        return redirect(route("getSearchStudent", ['keyword' => $data['keyword']]));
+    }
+
 }

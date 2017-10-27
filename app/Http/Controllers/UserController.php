@@ -95,4 +95,22 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function search($keyword)
+    {
+        $users = User::with('roles')->where(function ($query) use ($keyword) {
+            $query->where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')->orWhere('username', 'like', '%' . $keyword . '%')->orWhere('email', 'like', '%' . $keyword . '%');
+        })->paginate(10);
+        $roles = Role::all();
+        return view("pages.users.view")->with([
+            'users' => $users,
+            'roles' => $roles
+        ]);
+    }
+
+    public function loadSearch(Request $request)
+    {
+        $data = $request->all();
+        return redirect(route("getSearchUser", ['keyword' => $data['keyword']]));
+    }
 }

@@ -36,6 +36,11 @@
             <a href="{{ Route('getCourses') }}"><i class="material-icons">book</i>Courses</a>
         </li>
     @endif
+    @if(Auth::user()->hasPermission('View absent list'))
+        <li>
+            <a href="{{ Route('getAbsents', ['from' => \Carbon\Carbon::now(), 'to' => \Carbon\Carbon::now()]) }}"><i class="material-icons">list</i>Absents</a>
+        </li>
+    @endif
     @if(Auth::user()->hasPermission('view subjects'))
         <li>
             <a href="{{ Route('getSubjects') }}"><i class="material-icons">book</i>Subjects</a>

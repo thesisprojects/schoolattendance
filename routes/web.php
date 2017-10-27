@@ -36,13 +36,20 @@ Route::group(['prefix' => '/'], function () {
             Route::name('getEditUser')->get('edit/{id}', 'UserController@getEdit')->middleware('permissions:edit users');
             Route::name('postEditUser')->post('update', 'UserController@postUpdate')->middleware('permissions:edit users');
             Route::name('postCreateUser')->post('create', 'UserController@postCreate')->middleware('permissions:create users');
+            Route::name('getSearchUser')->get('search/{keyword}', 'UserController@search')->middleware('permissions:view students');
+            Route::name('postLoadUserSearch')->post('search', 'UserController@loadSearch')->middleware('permissions:view students');
         });
 
         Route::group(['prefix' => 'students/'], function () {
             Route::name('getStudents')->get('', 'StudentController@index')->middleware('permissions:view students');
             Route::name('getEditStudent')->get('edit/{id}', 'StudentController@getEdit')->middleware('permissions:edit students');
+            Route::name('getAbsents')->get('absents/{from}/{to}', 'StudentController@getAbsents')->middleware('permissions:View absent list');
             Route::name('postEditStudent')->post('update', 'StudentController@postUpdate')->middleware('permissions:edit students');
             Route::name('postCreateStudent')->post('create', 'StudentController@postCreate')->middleware('permissions:create students');
+            Route::name('postExcempt')->post('excempt', 'PrefectController@postExcempt')->middleware('permissions:Excuse students');
+            Route::name('postLoadAbsentData')->post('loadAbsentData', 'StudentController@postLoadAbsentData')->middleware('permissions:View absent list');
+            Route::name('getSearchStudent')->get('search/{keyword}', 'StudentController@search')->middleware('permissions:view students');
+            Route::name('postLoadStudentSearch')->post('search', 'StudentController@loadSearch')->middleware('permissions:view students');
             Route::group(['prefix' => 'subjects/'], function () {
                 Route::name('getAssignSubjects')->get('{id}', 'SubjectAssignController@index')->middleware('permissions:assign subjects');
                 Route::name('postAssignSubject')->post('assign', 'SubjectAssignController@postAssignSubject')->middleware('permissions:assign subjects');
@@ -61,6 +68,8 @@ Route::group(['prefix' => '/'], function () {
             Route::name('getEditSubject')->get('edit/{id}', 'SubjectController@getEdit')->middleware('permissions:edit courses');
             Route::name('postEditSubject')->post('update', 'SubjectController@postUpdate')->middleware('permissions:edit courses');
             Route::name('postCreateSubject')->post('create', 'SubjectController@postCreate')->middleware('permissions:create courses');
+            Route::name('getSearchSubject')->get('search/{keyword}', 'SubjectController@search')->middleware('permissions:view students');
+            Route::name('postLoadSubjectSearch')->post('search', 'SubjectController@loadSearch')->middleware('permissions:view students');
         });
 
         Route::group(['prefix' => 'attendancesystem/', 'middleware' => ['permissions:use attendance', 'mustBeATeacher']], function () {

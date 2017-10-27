@@ -18,6 +18,7 @@ class CreateStudentSubjectsTable extends Migration
             $table->uuid('id')->unique();
             $table->string('student_id');
             $table->string('subject_id');
+            $table->boolean('is_dropped')->default(0);
             $table->timestamps();
         });
     }

@@ -79,6 +79,22 @@
                 <i data-target="create-users-modal" class="large material-icons waves-effect modal-trigger">add</i>
             </a>
         </div>
+        <div class = "row">
+            <div class = "col s12 m12 l12">
+                <nav>
+                    <div class="nav-wrapper">
+                        {{ Form::open(['route' => 'postLoadUserSearch']) }}
+                        <div class="input-field">
+                            <input id="search" type="search" name = "keyword" required>
+                            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                            <i class="material-icons">close</i>
+                        </div>
+                        <button type = "submit" hidden></button>
+                        {{ Form::close() }}
+                    </div>
+                </nav>
+            </div>
+        </div>
         <div class="card-panel">
             <h4 class="grey-text">List of users</h4>
             <table class="table responsive-table">

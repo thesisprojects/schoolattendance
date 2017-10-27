@@ -72,4 +72,22 @@ class subjectController extends Controller
             ], 500);
         }
     }
+
+    public function search($keyword)
+    {
+        $subjects = Subject::with('teacher')->where(function ($query) use ($keyword) {
+            $query->where('cc_number', 'like', '%' . $keyword . '%')->orWhere('name', 'like', '%' . $keyword . '%')->orWhere('description', 'like', '%' . $keyword . '%');
+        })->paginate(10);
+        $teachers = User::where('isTeacher', 1)->get();
+        return view("pages.subjects.view")->with([
+            'subjects' => $subjects,
+            'teachers' => $teachers
+        ]);
+    }
+
+    public function loadSearch(Request $request)
+    {
+        $data = $request->all();
+        return redirect(route("getSearchSubject", ['keyword' => $data['keyword']]));
+    }
 }

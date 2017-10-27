@@ -21,7 +21,12 @@ class AttendanceSystemController extends Controller
     public function index()
     {
         $today = Carbon::now();
-        $subjects = Auth::user()->subjects()->with('students')->where('schedule', 'like', '%' . $today->copy()->dayOfWeek . '%')->get();
+        $subjects = Auth::user()->subjects()->with([
+            'students' => function($query)
+            {
+                $query->where('is_excempted', 0);
+            }
+        ])->where('schedule', 'like', '%' . $today->copy()->dayOfWeek . '%')->get();
         $currentSubject = null;
         foreach ($subjects as $subject) {
             $timeStartArray = explode(':', $subject->time_start);

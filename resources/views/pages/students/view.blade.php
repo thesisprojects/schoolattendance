@@ -46,7 +46,7 @@
                 <div class="col s12 m6 l6 input-field">
                     <label for="emergency-input">Emergency number</label>
                     <input type="text" class="form-control" id="emergency-input" name="parent_contact_number"
-                           minlength="11" maxlength="11" required>
+                           minlength="13" maxlength="13" required>
                 </div>
                 <div class="col s12 m6 l6">
                     <label>Course</label>
@@ -71,6 +71,22 @@
                 <i data-target="create-student-modal" class="large material-icons waves-effect modal-trigger">add</i>
             </a>
         </div>
+        <div class = "row">
+            <div class = "col s12 m12 l12">
+                <nav>
+                    <div class="nav-wrapper">
+                        {{ Form::open(['route' => 'postLoadStudentSearch']) }}
+                            <div class="input-field">
+                                <input id="search" type="search" name = "keyword" required>
+                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                <i class="material-icons">close</i>
+                            </div>
+                            <button type = "submit" hidden></button>
+                        {{ Form::close() }}
+                    </div>
+                </nav>
+            </div>
+        </div>
         <div class="card-panel">
             <h4 class="grey-text">List of students</h4>
             <table class="table responsive-table">
@@ -80,6 +96,7 @@
                     <th>Last Name</th>
                     <th>Emergency number</th>
                     <th>Date enrolled</th>
+                    <th></th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -98,6 +115,17 @@
                                 </button>
                             @endif
                         </td>
+                        {{ Form::open(["route" => "postExcempt"]) }}
+                        <td>
+                            @if(Auth::user()->hasPermission('Excuse students'))
+                                <input type="text" name="student_id" value="{{ $student->id }}" hidden>
+                                <button type="submit"
+                                        class="btn btn-success text-white">{{ $student->is_excempted ? 'Unexcuse' : 'Excuse' }}
+                                </button>
+                            @endif
+                        </td>
+                        {{ Form::close() }}
+
                         <td>
                             <button onclick="window.location.assign('{{ route('getEditStudent', ['id' => $student->id]) }}')"
                                     class="btn btn-success text-white">Edit
