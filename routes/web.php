@@ -48,6 +48,7 @@ Route::group(['prefix' => '/'], function () {
             Route::name('postCreateStudent')->post('create', 'StudentController@postCreate')->middleware('permissions:create students');
             Route::name('postExcempt')->post('excempt', 'PrefectController@postExcempt')->middleware('permissions:Excuse students');
             Route::name('postLoadAbsentData')->post('loadAbsentData', 'StudentController@postLoadAbsentData')->middleware('permissions:View absent list');
+            Route::name('getDownloadDropReport')->get('getDownloadDropped', 'DropListController@download')->middleware('permissions:View absent list');
             Route::name('getSearchStudent')->get('search/{keyword}', 'StudentController@search')->middleware('permissions:view students');
             Route::name('postLoadStudentSearch')->post('search', 'StudentController@loadSearch')->middleware('permissions:view students');
             Route::group(['prefix' => 'subjects/'], function () {

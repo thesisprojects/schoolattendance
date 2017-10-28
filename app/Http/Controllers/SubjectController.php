@@ -12,7 +12,20 @@ class subjectController extends Controller
     public function index()
     {
         $teachers = User::where('isTeacher', 1)->get();
-        $subjects = Subject::with('teacher')->paginate(10);
+        $subjects = Subject::with([
+            'attendances' => function($query)
+            {
+                $query->where('type', 'absent')->orWhere('type', 'late');
+            },
+            'attendances.student' =>function($query)
+            {
+
+            },
+            'teacher' => function($query)
+            {
+
+            }
+        ])->paginate(10);
         return view("pages.subjects.view")->with([
             'subjects' => $subjects,
             'teachers' => $teachers

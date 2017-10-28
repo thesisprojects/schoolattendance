@@ -112,6 +112,8 @@
                     <th>Schedule</th>
                     <th>Start Time</th>
                     <th>End Time</th>
+                    <th>Lates</th>
+                    <th>Absents</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -130,6 +132,8 @@
                         </td>
                         <td>{{ date("g:i a", strtotime($subject->time_start)) }}</td>
                         <td>{{ date("g:i a", strtotime($subject->time_end)) }}</td>
+                        <td>{{ $subject->attendances->where('type', 'late')->count() }}</td>
+                        <td>{{ $subject->attendances->where('type', 'absent')->count() }}</td>
                         <td>
                             <button onclick="window.location.assign('{{ route('getEditSubject', ['id' => $subject->id]) }}')"
                                     class="btn btn-success text-white">Edit

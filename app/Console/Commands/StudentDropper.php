@@ -56,7 +56,13 @@ class StudentDropper extends Command
             foreach ($subject->students as $student) {
                 $absents = $student->attendances->where('type', 'absent');
                 $this->info('Processing ' . $student->last_name . ', ' . $student->first_name . ' with ' . $absents->count() . ' absents!');
-                if ($absents->count() > 2) {
+                if ($absents->count() == 3) {
+                    $this->info('Warned ' . $student->last_name . ', ' . $student->first_name . ' with ' . $absents->count() . ' absents!');
+                    $this->info('NOTIFYING PARENT!');
+                    TextMessageSender::sendTextMessage($student->parent_contact_number, $student->last_name . ' ' . $student->first_name . " has been marked as warned for drop on subject " . $subject->name);
+                    $this->info('PARENT NOTIFIED!');
+                }
+                if($absents->count() > 4) {
                     $studentSubject = $student->studentSubjects->where('subject_id', $subject->id)->first();
                     $studentSubject->is_dropped = 1;
                     $studentSubject->save();
@@ -64,8 +70,6 @@ class StudentDropper extends Command
                     $this->info('NOTIFYING PARENT!');
                     TextMessageSender::sendTextMessage($student->parent_contact_number, $student->last_name . ' ' . $student->first_name . " has been marked as dropped on subject " . $subject->name);
                     $this->info('PARENT NOTIFIED!');
-                } else {
-                    $this->info('Not dropped ' . $student->last_name . ', ' . $student->first_name . ' with ' . $absents->count() . ' absents!');
                 }
             }
         }

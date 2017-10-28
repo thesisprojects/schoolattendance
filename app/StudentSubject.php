@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentSubject extends Model
 {
-    //
+    public function subject()
+    {
+        return $this->belongsTo('App\Subject');
+    }
 }
